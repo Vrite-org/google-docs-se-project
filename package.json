@@ -131,7 +131,8 @@
     "zustand": "^5.0.1"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.25.9",
+    "@babel/core": "^7.26.10",
+    "@babel/eslint-parser": "^7.27.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^22",
     "@types/react": "^19",
