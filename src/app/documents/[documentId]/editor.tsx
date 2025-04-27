@@ -2,11 +2,16 @@
 
 import { useLiveblocksExtension } from '@liveblocks/react-tiptap';
 import { useStorage } from '@liveblocks/react/suspense';
+import Blockquote from '@tiptap/extension-blockquote';
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { Color } from '@tiptap/extension-color';
 import FontFamily from '@tiptap/extension-font-family';
 import Highlight from '@tiptap/extension-highlight';
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
+import Strike from '@tiptap/extension-strike';
+import Subscript from '@tiptap/extension-subscript';
+import Superscript from '@tiptap/extension-superscript';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
@@ -18,6 +23,7 @@ import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import { common, createLowlight } from 'lowlight';
 import ImageResize from 'tiptap-extension-resize-image';
 
 import { editorMargin, editorWidth } from '@/config/editor';
@@ -27,6 +33,8 @@ import { useEditorStore } from '@/store/use-editor-store';
 
 import { Ruler } from './ruler';
 import { Threads } from './threads';
+
+const lowlight = createLowlight(common);
 
 interface EditorProps {
   initialContent?: string;
@@ -79,6 +87,14 @@ export const Editor = ({ initialContent }: EditorProps) => {
       Color,
       FontFamily,
       FontSizeExtension,
+      Strike,
+      Subscript,
+      Superscript,
+      Blockquote.configure({
+        HTMLAttributes: {
+          class: 'bg-[#f0f0f0] border-l-4 border-[#ff6347] p-4 pl-6 italic',
+        },
+      }),
       Highlight.configure({ multicolor: true }),
       Image.extend({
         name: 'image-editor',
@@ -93,6 +109,14 @@ export const Editor = ({ initialContent }: EditorProps) => {
       }),
       StarterKit.configure({
         history: false,
+      }),
+      CodeBlockLowlight.configure({
+        lowlight,
+        defaultLanguage: 'text',
+        languageClassPrefix: 'language-',
+        HTMLAttributes: {
+          class: 'overflow-x-auto rounded-md border border-[#c7c7c7] bg-[#f9fbfd] p-4',
+        },
       }),
       Table.configure({
         resizable: true,
