@@ -18,7 +18,7 @@ type User = { id: string; name: string; avatar: string; color: string };
 
 export const Room = ({ children, roomId }: PropsWithChildren<RoomProps>) => {
   const [users, setUsers] = useState<User[]>([]);
-
+  console.log(roomId);
   const fetchUsers = useMemo(
     () => async () => {
       try {

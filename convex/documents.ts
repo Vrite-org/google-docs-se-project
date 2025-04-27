@@ -10,9 +10,9 @@ export const create = mutation({
   },
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
-
+    alert('hello');
     if (!user) throw new ConvexError('Unauthorized!');
-
+    console.log({ user });
     const organizationId = (user.organization_id ?? undefined) as string | undefined;
 
     const documentId = await ctx.db.insert('documents', {
@@ -32,6 +32,7 @@ export const get = query({
     const user = await ctx.auth.getUserIdentity();
 
     if (!user) throw new ConvexError('Unauthorized!');
+    console.log({ user });
 
     const organizationId = (user.organization_id ?? undefined) as string | undefined;
 
