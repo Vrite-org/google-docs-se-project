@@ -1,6 +1,6 @@
 {
-  "name": "google-docs-clone",
-  "version": "1.0.1",
+  "name": "vrite",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,72 +11,16 @@
     "format": "prettier --check . --config .prettierrc.mjs",
     "format:fix": "prettier --write . --config .prettierrc.mjs"
   },
-  "author": {
-    "name": "Sanidhya Kumar Verma",
-    "email": "sanidhya.verma12345@gmail.com",
-    "url": "https://github.com/sanidhyy"
-  },
-  "description": "Full-stack Realtime Google Docs Clone using Next.js 15 and Convex..",
+  "description": "Modern document editor built with Next.js and TipTap",
   "keywords": [
-    "reactjs",
     "nextjs",
-    "convex",
-    "convex-db",
-    "clerk-auth",
     "tiptap-editor",
-    "lucide-icons",
-    "react-icons",
-    "livekit-io",
+    "liveblocks",
     "shadcn-ui",
-    "radix-ui",
     "tailwindcss",
-    "lodash",
-    "react-query",
-    "nuqs",
-    "sonner",
-    "typescript",
-    "javascript",
-    "vercel",
-    "postcss",
-    "prettier",
-    "eslint",
-    "react-dom",
-    "html",
-    "css",
-    "nuqs-state-management",
-    "infinite-query",
-    "real-time-documents",
-    "organized-editor",
-    "realtime-editor",
-    "paginate-documents",
-    "documents-management",
-    "ui/ux",
-    "google-docs-clone",
-    "date-fns",
-    "cn",
-    "clsx",
-    "lucide-react"
+    "typescript"
   ],
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sanidhyy/google-clone-clone.git"
-  },
-  "homepage": "https://github.com/sanidhyy/google-clone-clone#readme",
-  "bugs": {
-    "url": "https://github.com/sanidhyy/google-clone-clone/issues",
-    "email": "sanidhya.verma12345@gmail.com"
-  },
-  "funding": [
-    {
-      "type": "patreon",
-      "url": "https://www.patreon.com/sanidhy"
-    },
-    {
-      "type": "Buy me a coffee",
-      "url": "https://www.buymeacoffee.com/sanidhy"
-    }
-  ],
   "dependencies": {
     "@clerk/nextjs": "^6.9.14",
     "@liveblocks/client": "^2.23.2",

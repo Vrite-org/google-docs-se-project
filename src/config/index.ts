@@ -47,11 +47,10 @@ export const siteConfig: Metadata = {
     'lucide-react',
   ] as Array<string>,
   authors: {
-    name: 'Sanidhya Kumar Verma',
-    url: 'https://github.com/sanidhyy',
+    name: 'Tabish',
   },
 } as const;
 
 export const links = {
-  sourceCode: 'https://github.com/sanidhyy/google-docs-clone',
+  sourceCode: 'https://github.com/Txbish/Vrite',
 } as const;
