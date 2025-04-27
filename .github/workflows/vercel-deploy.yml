@@ -8,6 +8,17 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      CLERK_ISSUER_URL: ${{ secrets.CLERK_ISSUER_URL }}
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+      CLERK_TELEMETRY_DISABLED: ${{ secrets.CLERK_TELEMETRY_DISABLED }}
+      CONVEX_DEPLOYMENT: ${{ secrets.CONVEX_DEPLOYMENT }}
+      LIVEBLOCKS_SECRET_KEY: ${{ secrets.LIVEBLOCKS_SECRET_KEY }}
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+      NEXT_PUBLIC_CONVEX_URL: ${{ secrets.NEXT_PUBLIC_CONVEX_URL }}
+      NEXT_PUBLIC_LIVEBLOCKS_API_KEY: ${{ secrets.NEXT_PUBLIC_LIVEBLOCKS_API_KEY }}
+      NEXT_TELEMETRY_DISABLED: ${{ secrets.NEXT_TELEMETRY_DISABLED }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,8 +37,8 @@ jobs:
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Build Project Artifacts
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Custom Build Command with Convex
+        run: npx convex deploy --cmd 'npm run build' --deployment=${{ env.CONVEX_DEPLOYMENT }}
 
-      - name: Deploy Project Artifacts to Vercel
+      - name: Deploy Project to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
