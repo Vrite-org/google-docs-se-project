@@ -22,7 +22,11 @@ export async function POST(req: NextRequest) {
   if (!document) return new NextResponse('Unauthorized!', { status: 401 });
   console.log(1);
   const isOwner = document.ownerId === user.id;
-  const isOrganizationMember = !!(document.organizationId && document.organizationId === sessionClaims.o?.id);
+  const isOrganizationMember = !!(
+    document?.organizationId &&
+    (sessionClaims.o as any)?.id &&
+    document.organizationId === (sessionClaims.o as any).id
+  );
   if (!isOwner && !isOrganizationMember) return new NextResponse('Unauthorized!', { status: 401 });
   console.log(2);
   const name = user.fullName ?? user.primaryEmailAddress?.emailAddress ?? 'Anonymous';
