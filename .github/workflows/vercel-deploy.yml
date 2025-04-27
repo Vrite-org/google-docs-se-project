@@ -17,11 +17,8 @@ jobs:
         with:
           node-version: '23'
 
-      - name: Install pnpm
-        run: npm install --global pnpm@latest
-
       - name: Install Project Dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
