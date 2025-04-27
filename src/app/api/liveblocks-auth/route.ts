@@ -20,7 +20,6 @@ export async function POST(req: NextRequest) {
   const document = await convex.query(api.documents.getById, { id: room });
 
   if (!document) return new NextResponse('Unauthorized!', { status: 401 });
-  console.log(1);
   const isOwner = document.ownerId === user.id;
   const isOrganizationMember = !!(
     document?.organizationId &&
@@ -28,7 +27,6 @@ export async function POST(req: NextRequest) {
     document.organizationId === (sessionClaims.o as any).id
   );
   if (!isOwner && !isOrganizationMember) return new NextResponse('Unauthorized!', { status: 401 });
-  console.log(2);
   const name = user.fullName ?? user.primaryEmailAddress?.emailAddress ?? 'Anonymous';
   const nameToNumber = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
   const hue = Math.abs(nameToNumber) % 360;
