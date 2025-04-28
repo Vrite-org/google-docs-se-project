@@ -9,7 +9,10 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --check . --config .prettierrc.mjs",
-    "format:fix": "prettier --write . --config .prettierrc.mjs"
+    "format:fix": "prettier --write . --config .prettierrc.mjs",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "description": "Modern document editor built with Next.js and TipTap",
   "keywords": [
@@ -23,6 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "@clerk/nextjs": "^6.9.14",
+    "@google/generative-ai": "^0.24.0",
     "@liveblocks/client": "^2.23.2",
     "@liveblocks/node": "^2.16.0",
     "@liveblocks/react": "^2.23.2",
@@ -86,7 +90,11 @@
   "devDependencies": {
     "@babel/core": "^7.26.10",
     "@babel/eslint-parser": "^7.27.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "@types/jest": "^29.5.14",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-color": "^3.0.12",
@@ -95,12 +103,15 @@
     "eslint-config-next": "15.3.1",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8",
     "prettier": "^3.4.1",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "sort-classes": "npm:prettier-plugin-tailwindcss",
     "tailwindcss": "^3.4.1",
     "tidy-imports": "npm:@trivago/prettier-plugin-sort-imports",
+    "ts-jest": "^29.3.2",
     "typescript": "^5"
   },
   "trustedDependencies": [

@@ -50,9 +50,13 @@ import {
   Undo2Icon,
   UploadIcon,
 } from 'lucide-react';
+import {
+  SparklesIcon, // Add this import
+} from 'lucide-react';
 import React, { useState } from 'react';
 import { useEffect as reactUseEffect } from 'react';
 import { type ColorResult, TwitterPicker } from 'react-color';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -67,6 +71,108 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { cn } from '@/lib/utils';
 import { useEditorStore } from '@/store/use-editor-store';
 
+// Add this import if not already present
+
+// Add this GeminiAIButton component before the Toolbar export
+const GeminiAIButton = () => {
+  const { editor } = useEditorStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [prompt, setPrompt] = useState('');
+
+  const handleGenerateContent = async () => {
+    if (!editor || !prompt.trim()) return;
+
+    try {
+      setIsLoading(true);
+
+      // Get the current document content
+      const documentContent = editor.getHTML();
+
+      // Call the Gemini API
+      const response = await fetch('/api/gemini', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+          documentContent,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to generate content');
+      }
+
+      // Insert the generated content at the current cursor position
+      editor.commands.insertContent(data.text);
+
+      // Close dialog and reset prompt
+      setOpen(false);
+      setPrompt('');
+      toast.success('AI content generated successfully!');
+    } catch (error) {
+      console.error('Error using Gemini:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to generate content');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            onClick={() => setOpen(true)}
+            className="flex h-7 min-w-7 items-center justify-center rounded-sm text-sm hover:bg-neutral-200/80"
+          >
+            <SparklesIcon className="size-4" />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Ask Gemini AI</p>
+        </TooltipContent>
+      </Tooltip>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Ask Gemini AI</DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            <p className="text-sm text-gray-500">
+              Gemini will use your document content as context and generate text based on your prompt.
+            </p>
+
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="ai-prompt">Your request:</Label>
+              <Input
+                id="ai-prompt"
+                placeholder="e.g., Summarize this text, Generate a conclusion, Fix grammar issues..."
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                className="h-20"
+                disabled={isLoading}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button onClick={handleGenerateContent} disabled={!prompt.trim() || isLoading} className="flex items-center gap-2">
+              {isLoading ? 'Generating...' : 'Generate'}
+              {isLoading && <span className="animate-pulse">...</span>}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+};
 const LineHeightButton = () => {
   const { editor } = useEditorStore();
 
@@ -1752,6 +1858,7 @@ export const Toolbar = () => {
         <div className="flex items-center gap-x-1.5">
           <KeyboardShortcutsButton />
           <HelpButton />
+          <GeminiAIButton />
         </div>
       </div>
     </TooltipProvider>
