@@ -8,7 +8,7 @@ module.exports = {
     '^.+\\.(css|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
     // Handle image imports
     '^.+\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/__mocks__/fileMock.js',
-    // Handle module aliases
+    // Handle module aliase
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
